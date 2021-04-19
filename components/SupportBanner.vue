@@ -13,14 +13,23 @@
           <v-form>
             <v-container>
               <v-row>
-                <v-col cols="12" sm="10">
-                  <v-text-field solo></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="2">
-                  <v-btn color="accent" block large>
-                    <v-icon>mdi-magnify</v-icon>
-                    {{ $t("Поиск") }}
-                  </v-btn>
+                <v-col cols="12">
+                  <v-autocomplete
+                    :loading="loading"
+                    :items="items"
+                    item-text="title"
+                    @change="select"
+                    return-object
+                    :search-input.sync="search"
+                    cache-items
+                    outlined
+                    clearable
+                    hide-no-data
+                    hide-details
+                    solo
+                    :label="$t('Поиск')"
+                  >
+                </v-autocomplete>
                 </v-col>
               </v-row>
             </v-container>
@@ -32,11 +41,38 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
+import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+import { IContentDocument } from "~/node_modules/@nuxt/content/types/content";
 
 @Component
 export default class SupportBanner extends Vue {
   @Prop({ type: String, default: '' }) title!: string
+
+  search: string = ''
+  loading: boolean = false
+  items: IContentDocument[] = []
+
+  @Watch('search') async onSearchChanged(value: string) {
+    if (!value || value.length  < 3) {
+      this.items = []
+    }
+    value && value.length >= 3 && await this.querySelections(value)
+  }
+
+  async querySelections(search: string) {
+    this.loading = true
+
+  this.items = await this.$content(`/user-manuals/${this.$i18n.locale}`, {deep: true}).where({extension: {$ne: 'json'}}&&{slug: {$ne: '!cover'}}).search(search).only(['title']).fetch() as IContentDocument[]
+
+    this.loading = false
+  }
+
+  select(payload: IContentDocument){
+    this.$router.push(this.localePath('/'+payload.path.split('/').slice(3).join('/')))
+  }
+
+  
+  
 
 }
 </script>

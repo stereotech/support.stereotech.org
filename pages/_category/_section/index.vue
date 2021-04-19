@@ -1,8 +1,14 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>
+      <v-card-title v-if="$vuetify.breakpoint.xs">
         <v-breadcrumbs
+          divider=">"
+          :items="getBreadcrumbsItems"
+        ></v-breadcrumbs>
+      </v-card-title>
+      <v-card-title v-else>  
+        <v-breadcrumbs        
           large
           divider=">"
           :items="getBreadcrumbsItems"
@@ -60,7 +66,7 @@ export default class ManualCategory extends Vue {
         text: this.mainFile.title, disabled: true, exact: true, nuxt: true, to: this.$route.fullPath
       }]
   }
-  category: IContentDocument | IContentDocument[] = []
+  category: IContentDocument[] = []
   categoryText: string = ''
   sectionFiles: IContentDocument | IContentDocument[] = []
 
@@ -70,9 +76,9 @@ export default class ManualCategory extends Vue {
 
   async mounted () {
     this.sectionFiles = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).without('body').fetch()
-    this.mainFile = this.sectionFiles.find(i => i.slug === '!cover')
-    this.subFiles = this.sectionFiles.filter(i => i.slug !== '!cover')
-    this.category = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`).where({ extension: '.json' }).only(['title']).fetch()
+    this.mainFile = this.sectionFiles.find((i: { slug: string; }) => i.slug === '!cover')
+    this.subFiles = this.sectionFiles.filter((i: { slug: string; }) => i.slug !== '!cover')
+    this.category = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
     this.categoryText = this.category[0].title
     //console.log(this.category[0].title)
   }

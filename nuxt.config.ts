@@ -58,7 +58,7 @@ const config: NuxtConfig = {
         markdown: {
             tocDepth: 2
         },
-        fullTextSearchFields: ['text']
+        fullTextSearchFields: ['text', 'title']
     },
     i18n: {
         locales: [
@@ -140,7 +140,7 @@ const config: NuxtConfig = {
 
     optimizedImages: {
         optimizeImages: true,
-        optimizeImagesInDev: true
+        optimizeImagesInDev: false
     },
     /*
     ** Build configuration

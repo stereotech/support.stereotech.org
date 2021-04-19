@@ -8,7 +8,7 @@
             v-for="(category, index) in categories"
             :key="index"
             cols="12"
-            md="3"
+            md="4"
           >
             <v-card
               :to="localePath(`/${categoryPath(category.path.split('/'))}`)"
