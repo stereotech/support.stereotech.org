@@ -18,7 +18,7 @@
                     :loading="loading"
                     :items="items"
                     item-text="title"
-                    @change="select"
+                    item-value="path"
                     return-object
                     :search-input.sync="search"
                     cache-items
@@ -29,7 +29,19 @@
                     solo
                     :label="$t('Поиск')"
                   >
-                </v-autocomplete>
+                    <template v-slot:item="{ item }">
+                      <v-list-item
+                        v-if="item"
+                        nuxt
+                        :to="localePath(createLink(item.path))"
+                      >
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                        <v-list-item-subtitle>{{
+                          $t(item.dir)
+                        }}</v-list-item-subtitle>
+                      </v-list-item>
+                    </template>
+                  </v-autocomplete>
                 </v-col>
               </v-row>
             </v-container>
@@ -52,27 +64,31 @@ export default class SupportBanner extends Vue {
   loading: boolean = false
   items: IContentDocument[] = []
 
-  @Watch('search') async onSearchChanged(value: string) {
-    if (!value || value.length  < 3) {
+  @Watch('search') async onSearchChanged (value: string) {
+    if (!value || value.length < 3) {
       this.items = []
     }
     value && value.length >= 3 && await this.querySelections(value)
   }
 
-  async querySelections(search: string) {
+  async querySelections (search: string) {
     this.loading = true
 
-  this.items = await this.$content(`/user-manuals/${this.$i18n.locale}`, {deep: true}).where({extension: {$ne: 'json'}}&&{slug: {$ne: '!cover'}}).search(search).only(['title']).fetch() as IContentDocument[]
-
+    this.items = await this.$content(`/user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: 'json' } } && { slug: { $ne: '!cover' } }).search(search).without(['body']).fetch() as IContentDocument[]
+    this.items.forEach(i => {
+      i.dir = i.dir.split('/').pop() || ''
+    })
     this.loading = false
   }
 
-  select(payload: IContentDocument){
-    this.$router.push(this.localePath('/'+payload.path.split('/').slice(3).join('/')))
+
+
+  createLink (link: string) {
+    return '/' + link.split('/').slice(3).join('/')
   }
 
-  
-  
+
+
 
 }
 </script>
