@@ -103,11 +103,11 @@ export default class Category extends Vue {
       this.searchContent = []
     }
     console.log(data)
-    this.searchContent = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, { deep: true }).search(data).fetch()
+    this.searchContent = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, { deep: true }).search(data).fetch()
   }
 
   async asyncData (ctx: Context) {
-    const content = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`, { deep: true }).without('body').fetch()
+    const content = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`, { deep: true }).without('body').fetch()
     const bannerData = content.find((i: IContentDocument) => i.extension === '.json' && i.slug === 'home')
     const covers = content.filter((i: IContentDocument) => i.slug === '!cover').map((v: IContentDocument) => { return { title: v.title, link: v.path.split('/').slice(-2)[0], children: content.filter((c: IContentDocument) => c.dir == v.dir && c.slug !== '!cover') } })
     return {
@@ -118,13 +118,6 @@ export default class Category extends Vue {
 
   }
 
-  async mounted () {
-    //this.content = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, { deep: true }).without('body').fetch()
-    //this.bannerData = this.content.find((i: IContentDocument) => i.extension === '.json' && i.slug === 'home')
-    //this.covers = this.content.filter((i: IContentDocument) => i.slug === '!cover').map((v: IContentDocument) => { return { title: v.title, link: v.path.split('/').slice(-2)[0], children: this.content.filter((c: IContentDocument) => c.dir == v.dir && c.slug !== '!cover') } })
-    //console.log(covers)
-
-  }
 }
 </script>
 

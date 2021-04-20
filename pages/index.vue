@@ -24,6 +24,9 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-col cols="12">
+          <MoreInfo />
+        </v-col>
       </v-container>
     </v-card-text>
   </v-card>
@@ -34,6 +37,7 @@ import { IContentDocument } from "@nuxt/content/types/content";
 import { Context } from '@nuxt/types';
 import { Vue, Component } from "nuxt-property-decorator";
 import SupportBanner from "~/components/SupportBanner.vue"
+import MoreInfo from "~/components/MoreInfo.vue"
 
 @Component({
   components: {

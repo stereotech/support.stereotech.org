@@ -82,7 +82,7 @@ export default class ManualCategory extends Vue {
   }
 
   async asyncData (ctx: Context) {
-    const sectionFiles = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).without('body').fetch()
+    const sectionFiles = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).without('body').fetch()
     const mainFile = sectionFiles.find((i: { slug: string; }) => i.slug === '!cover')
     const subFiles = sectionFiles.filter((i: { slug: string; }) => i.slug !== '!cover')
     const category = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]

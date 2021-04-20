@@ -110,12 +110,12 @@ export default class Section extends Vue {
   }
 
   async asyncData (ctx: Context) {
-    const page = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}/${ctx.route.params.file}`, { deep: true }).fetch()
-    const fileTitle = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}/${ctx.route.params.file}`).only(['title']).fetch()
-    const prevNext = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).only(['title', 'slug']).where({ slug: { $ne: '!cover' } }).surround(ctx.route.params.file).fetch()
+    const page = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}/${ctx.route.params.file}`, { deep: true }).fetch()
+    const fileTitle = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}/${ctx.route.params.file}`).only(['title']).fetch()
+    const prevNext = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).only(['title', 'slug']).where({ slug: { $ne: '!cover' } }).surround(ctx.route.params.file).fetch()
     const category = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
     const categoryText = category[0].title
-    const sectionFiles = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).without('body').fetch()
+    const sectionFiles = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).without('body').fetch()
     const mainFileText = sectionFiles.find((i: { slug: string; }) => i.slug === '!cover').title
     return {
       page,

@@ -74,7 +74,7 @@ export default class SupportBanner extends Vue {
   async querySelections (search: string) {
     this.loading = true
 
-    this.items = await this.$content(`/user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: 'json' } } && { slug: { $ne: '!cover' } }).search(search).without(['body']).fetch() as IContentDocument[]
+    this.items = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: 'json' } } && { slug: { $ne: '!cover' } }).search(search).without(['body']).fetch() as IContentDocument[]
     this.items.forEach(i => {
       i.dir = i.dir.split('/').pop() || ''
     })
