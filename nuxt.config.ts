@@ -104,9 +104,14 @@ const config: NuxtConfig = {
         materialIcons: false,
         lang: {
             locales: { ru },
-            current: 'ru'
+            current: 'ru',
+            t: (key, ...params) => key
         },
         theme: {
+            dark: false,
+            disable: false,
+            default: false,
+            options: {},
             themes: {
                 light: {
                     primary: '#0277bd',
