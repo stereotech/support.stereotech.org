@@ -392,5 +392,9 @@
     "flow":"Подача пластика",
     "layerHeight":"Мин. высота слоя",
     "Сортировать по":"Сортировать по",
-    "Параметры печати":"Параметры печати"
+    "Параметры печати":"Параметры печати",
+    "ste320":"Stereotech серия 3хх",
+    "ste520":"Stereotech серия 5хх",
+    "steapp":"Stereotech STE App",
+    "steslicer":"Stereotech STE Slicer"
 }

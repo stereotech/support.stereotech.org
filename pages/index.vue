@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <SupportBanner :title="this.$tc('Руководства пользователя')" />
+    <SupportBanner :title="this.$tc('Руководства пользователя')" :searchable="true"/>
     <v-card-text>
       <v-container fluid>
         <v-row justify="center">

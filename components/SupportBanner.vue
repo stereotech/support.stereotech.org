@@ -10,7 +10,7 @@
           <h4 class="display-1 font-weight-light">
             {{ title }}
           </h4>
-          <v-form>
+          <v-form v-if="searchable">
             <v-container>
               <v-row>
                 <v-col cols="12">
@@ -20,8 +20,7 @@
                     item-text="title"
                     item-value="path"
                     return-object
-                    :search-input.sync="search"
-                    cache-items
+                    :search-input.sync="search"                   
                     outlined
                     clearable
                     hide-no-data
@@ -59,6 +58,7 @@ import { IContentDocument } from "~/node_modules/@nuxt/content/types/content";
 @Component
 export default class SupportBanner extends Vue {
   @Prop({ type: String, default: '' }) title!: string
+  @Prop({type: Boolean, default: false}) searchable!: boolean
 
   search: string = ''
   loading: boolean = false

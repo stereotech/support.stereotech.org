@@ -392,5 +392,9 @@
   "flow":"Kunststoffzufuhr",
   "layerHeight":"Min. schichthöhe",
   "Сортировать по":"Sortieren",
-  "Параметры печати":"Druckoptionen"
+  "Параметры печати":"Druckoptionen",
+  "ste320":"Stereotech 3xx series",
+  "ste520":"Stereotech 5xx series",
+  "steapp":"Stereotech STE App",
+  "steslicer":"Stereotech STE Slicer"
 }
