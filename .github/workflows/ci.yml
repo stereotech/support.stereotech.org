@@ -36,14 +36,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: stereotech/User-Manuals
-          path: content
+          path: content/user-manuals
           ref: master
       - name: Prepare docs
         run: |
-          cd content
+          cd content/user-manuals
           node ./scripts/generate-menu.js
           cd ..
-          cp -rf content/static .
+          cp -rf content/user-manuals/static .
       - name: Generate job
         run: npm run generate
       - name: Upload a Build Artifact
