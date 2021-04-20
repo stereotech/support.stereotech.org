@@ -40,9 +40,6 @@ jobs:
           ref: master
       - name: Prepare docs
         run: |
-          cd content/user-manuals
-          node ./scripts/generate-menu.js
-          cd ..
           cp -rf content/user-manuals/static .
       - name: Generate job
         run: npm run generate
