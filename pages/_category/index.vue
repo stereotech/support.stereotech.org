@@ -4,18 +4,15 @@
     <v-list v-if="searchContent.length">
       <v-list-item v-for="s in searchContent" :key="s.slug">
         <v-list-item-title>
-          {{s.title}}
+          {{ s.title }}
         </v-list-item-title>
       </v-list-item>
     </v-list>
     <v-card-title v-if="$vuetify.breakpoint.xs">
-      <v-breadcrumbs
-        divider=">"
-        :items="getBreadcrumbsItems"
-      ></v-breadcrumbs>
+      <v-breadcrumbs divider=">" :items="getBreadcrumbsItems"></v-breadcrumbs>
     </v-card-title>
-    <v-card-title v-else>  
-      <v-breadcrumbs        
+    <v-card-title v-else>
+      <v-breadcrumbs
         large
         divider=">"
         :items="getBreadcrumbsItems"
@@ -63,7 +60,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Context } from '@nuxt/types';
+import { Vue, Component } from "nuxt-property-decorator";
 import SupportBanner from "~/components/SupportBanner.vue"
 import { IContentDocument } from "~/node_modules/@nuxt/content/types/content";
 
@@ -100,18 +98,30 @@ export default class Category extends Vue {
     return arr[arr.length - 2]
   }
 
-  async onSearch(data: string){
-    if(!data){
+  async onSearch (data: string) {
+    if (!data) {
       this.searchContent = []
     }
     console.log(data)
-    this.searchContent = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, {deep: true}).search(data).fetch()
+    this.searchContent = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, { deep: true }).search(data).fetch()
+  }
+
+  async asyncData (ctx: Context) {
+    const content = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`, { deep: true }).without('body').fetch()
+    const bannerData = content.find((i: IContentDocument) => i.extension === '.json' && i.slug === 'home')
+    const covers = content.filter((i: IContentDocument) => i.slug === '!cover').map((v: IContentDocument) => { return { title: v.title, link: v.path.split('/').slice(-2)[0], children: content.filter((c: IContentDocument) => c.dir == v.dir && c.slug !== '!cover') } })
+    return {
+      content,
+      bannerData,
+      covers
+    }
+
   }
 
   async mounted () {
-    this.content = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, { deep: true }).without('body').fetch()
-    this.bannerData = this.content.find((i: IContentDocument) => i.extension === '.json' && i.slug === 'home')
-    this.covers = this.content.filter((i: IContentDocument) => i.slug === '!cover').map((v: IContentDocument) => { return { title: v.title, link: v.path.split('/').slice(-2)[0], children: this.content.filter((c: IContentDocument) => c.dir == v.dir && c.slug !== '!cover') } })
+    //this.content = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}`, { deep: true }).without('body').fetch()
+    //this.bannerData = this.content.find((i: IContentDocument) => i.extension === '.json' && i.slug === 'home')
+    //this.covers = this.content.filter((i: IContentDocument) => i.slug === '!cover').map((v: IContentDocument) => { return { title: v.title, link: v.path.split('/').slice(-2)[0], children: this.content.filter((c: IContentDocument) => c.dir == v.dir && c.slug !== '!cover') } })
     //console.log(covers)
 
   }

@@ -12,8 +12,8 @@
               :items="getBreadcrumbsItems"
             ></v-breadcrumbs>
           </v-card-title>
-          <v-card-title v-else>  
-            <v-breadcrumbs        
+          <v-card-title v-else>
+            <v-breadcrumbs
               large
               divider=">"
               :items="getBreadcrumbsItems"
@@ -63,9 +63,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from "nuxt-property-decorator";
 import { IContentDocument } from "~/node_modules/@nuxt/content/types/content";
 import ManualSideNav from "~/components/ManualSideNav.vue"
+import { Context } from '@nuxt/types';
 
 @Component({
   components: {
@@ -99,24 +100,40 @@ export default class Section extends Vue {
 
   async mounted () {
 
-    this.page = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}/${this.$route.params.file}`, { deep: true }).fetch()
-    this.fileTitle = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}/${this.$route.params.file}`).only(['title']).fetch()
-    // if(this.$route.hash){
-    //     await this.$vuetify.goTo(this.$route.hash)
-    // }
-    this.prevNext = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).only(['title', 'slug']).where({ slug: { $ne: '!cover' } }).surround(this.$route.params.file).fetch()
-    this.category = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
-    this.categoryText = this.category[0].title
-    this.sectionFiles = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).without('body').fetch()
-    this.mainFileText = this.sectionFiles.find((i: { slug: string; }) => i.slug === '!cover').title
+    //this.page = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}/${this.$route.params.file}`, { deep: true }).fetch()
+    //this.fileTitle = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}/${this.$route.params.file}`).only(['title']).fetch()
+    //this.prevNext = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).only(['title', 'slug']).where({ slug: { $ne: '!cover' } }).surround(this.$route.params.file).fetch()
+    //this.category = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
+    //this.categoryText = this.category[0].title
+    //this.sectionFiles = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).without('body').fetch()
+    //this.mainFileText = this.sectionFiles.find((i: { slug: string; }) => i.slug === '!cover').title
+  }
+
+  async asyncData (ctx: Context) {
+    const page = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}/${ctx.route.params.file}`, { deep: true }).fetch()
+    const fileTitle = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}/${ctx.route.params.file}`).only(['title']).fetch()
+    const prevNext = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).only(['title', 'slug']).where({ slug: { $ne: '!cover' } }).surround(ctx.route.params.file).fetch()
+    const category = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
+    const categoryText = category[0].title
+    const sectionFiles = await ctx.$content(`/user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).without('body').fetch()
+    const mainFileText = sectionFiles.find((i: { slug: string; }) => i.slug === '!cover').title
+    return {
+      page,
+      fileTitle,
+      prevNext,
+      category,
+      categoryText,
+      sectionFiles,
+      mainFileText
+    }
   }
 }
 </script>
 
 <style>
 .sideNavPos {
-    position: sticky;
-    top: 10%;
+  position: sticky;
+  top: 10%;
 }
 .nuxt-content h1 {
   font-size: 6rem !important;

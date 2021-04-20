@@ -1,6 +1,9 @@
 <template>
   <v-card>
-    <SupportBanner :title="this.$tc('Руководства пользователя')" :searchable="true"/>
+    <SupportBanner
+      :title="this.$tc('Руководства пользователя')"
+      :searchable="true"
+    />
     <v-card-text>
       <v-container fluid>
         <v-row justify="center">
@@ -28,7 +31,8 @@
 
 <script lang="ts">
 import { IContentDocument } from "@nuxt/content/types/content";
-import { Vue, Component } from "vue-property-decorator";
+import { Context } from '@nuxt/types';
+import { Vue, Component } from "nuxt-property-decorator";
 import SupportBanner from "~/components/SupportBanner.vue"
 
 @Component({
@@ -45,7 +49,14 @@ export default class Support extends Vue {
   categories: IContentDocument | IContentDocument[] = []
 
   async mounted () {
-    this.categories = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: '.json' }).fetch()
+    //this.categories = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: '.json' }).fetch()
+  }
+
+  async asyncData (ctx: Context) {
+    const categories = await ctx.$content(`user-manuals/${ctx.i18n.locale}`, { deep: true }).where({ extension: '.json' }).fetch()
+    return {
+      categories
+    }
   }
 }
 </script>

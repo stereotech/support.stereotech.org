@@ -3,6 +3,7 @@ import { NuxtConfig } from '@nuxt/types'
 import ru from 'vuetify/src/locale/ru'
 
 const config: NuxtConfig = {
+    target: 'static',
     head: {
         title: '5D Additive Manufacturing',
         titleTemplate: 'Stereotech - %s',
@@ -146,7 +147,7 @@ const config: NuxtConfig = {
     optimizedImages: {
         optimizeImages: true,
         optimizeImagesInDev: false
-    },
+    }
     /*
     ** Build configuration
     */
