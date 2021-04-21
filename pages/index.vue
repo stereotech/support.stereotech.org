@@ -24,9 +24,6 @@
             </v-card>
           </v-col>
         </v-row>
-        <v-col cols="12">
-          <MoreInfo />
-        </v-col>
       </v-container>
     </v-card-text>
   </v-card>
@@ -37,7 +34,6 @@ import { IContentDocument } from "@nuxt/content/types/content";
 import { Context } from '@nuxt/types';
 import { Vue, Component } from "nuxt-property-decorator";
 import SupportBanner from "~/components/SupportBanner.vue"
-import MoreInfo from "~/components/MoreInfo.vue"
 
 @Component({
   components: {
@@ -53,7 +49,7 @@ export default class Support extends Vue {
   categories: IContentDocument | IContentDocument[] = []
 
   async mounted () {
-    //this.categories = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: '.json' }).fetch()
+    //this.categories = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension:'.json' }).fetch() as IContentDocument[]
   }
 
   async asyncData (ctx: Context) {
