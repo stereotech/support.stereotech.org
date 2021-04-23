@@ -23,6 +23,7 @@
     "nuxt-i18n": "^6.15.1",
     "nuxt-property-decorator": "^2.9.1",
     "sass": "^1.32.8",
+    "transliteration": "^2.2.0",
     "vue": "^2.6.12",
     "vue-property-decorator": "^8.3.0",
     "vue-the-mask": "^0.11.1",

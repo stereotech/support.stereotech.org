@@ -26,7 +26,7 @@ const config: NuxtConfig = {
     ],
 
     router: {
-        // middleware: 'i18n'
+        // middleware: 'i18n',
     },
     /*
     ** Global CSS
@@ -44,6 +44,7 @@ const config: NuxtConfig = {
     ],
     plugins: [
         '~/plugins/vue-the-mask',
+        '~/plugins/transliteration',
     ],
     /*
     ** Nuxt.js modules

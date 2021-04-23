@@ -10,21 +10,18 @@
           </v-list-item-title>
       </v-list-item>
       <v-divider></v-divider> 
-      <template v-for="(header, index) in manualHeaders">
+
         <v-list-item
-          :key="index"
-          :to="
-            localePath(
-              `/${$route.params.category}/${$route.params.section}/${$route.params.file}#${header.id}`
-            )
-          "
+          v-for="header of manualHeaders"
+          :key="header.id"
+          :to="`#${header.id}`"
           nuxt
         >
           <v-list-item-title>
             {{ header.text }}
           </v-list-item-title>
         </v-list-item>
-      </template>     
+    
     </v-list>
   </v-card>
 </template>

@@ -23,13 +23,9 @@
               }}</v-list-item-title>
             </v-list-item>
             <v-list-item
-              v-for="(header, j) in item.toc"
-              :key="j"
-              :to="
-                localePath(
-                  `/${$route.params.category}/${$route.params.section}/${item.slug}#${header.id}`
-                )
-              "
+              v-for="header of item.toc"
+              :key="header.id"
+              :to="`/${$route.params.category}/${$route.params.section}/${item.slug}#${header.id}`"
               nuxt
             >
               <v-list-item-title
@@ -72,19 +68,21 @@ export default class ManualCategory extends Vue {
 
   mainFile: IContentDocument = { dir: '', path: '', extension: '', slug: '', createdAt: new Date(), updatedAt: new Date() }
 
-  // async mounted () {
-  //   this.sectionFiles = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).without('body').fetch()
-  //   this.mainFile = this.sectionFiles.find((i: { slug: string; }) => i.slug === '!cover')
-  //   this.subFiles = this.sectionFiles.filter((i: { slug: string; }) => i.slug !== '!cover')
-  //   this.category = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
-  //   this.categoryText = this.category[0].title
-  //   console.log(this.category[0].title)
-  // }
+  async mounted () {
+    // this.sectionFiles = await this.$content(`/user-manuals/${this.$i18n.locale}/${this.$route.params.category}/${this.$route.params.section}`, { deep: true }).without('body').fetch()
+    // this.mainFile = this.sectionFiles.find((i: { slug: string; }) => i.slug === '!cover')
+    // this.subFiles = this.sectionFiles.filter((i: { slug: string; }) => i.slug !== '!cover')
+    // this.sectionFiles.forEach((el: { toc: any[]; }) => this.$fixIds(el.toc))
+    // this.category = await this.$content(`user-manuals/${this.$i18n.locale}/${this.$route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
+    // this.categoryText = this.category[0].title
+    // console.log(this.category[0].title)
+  }
 
   async asyncData (ctx: Context) {
     const sectionFiles = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}/${ctx.route.params.section}`, { deep: true }).without('body').fetch()
     const mainFile = sectionFiles.find((i: { slug: string; }) => i.slug === '!cover')
     const subFiles = sectionFiles.filter((i: { slug: string; }) => i.slug !== '!cover')
+    sectionFiles.forEach((el: { toc: any[]; }) => ctx.app.$fixIds(el.toc))
     const category = await ctx.$content(`user-manuals/${ctx.i18n.locale}/${ctx.route.params.category}`).where({ extension: '.json' }).only(['title']).fetch() as IContentDocument[]
     const categoryText = category[0].title
     return {
