@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { Context } from '@nuxt/types';
 import { Vue, Component } from 'nuxt-property-decorator'
 import ContactForm from '~/components/ContactForm.vue'
 
@@ -23,7 +24,12 @@ import ContactForm from '~/components/ContactForm.vue'
 export default class Support extends Vue {
   async mounted () {
     //@ts-ignore
-    await this.$recaptcha.init()
+    //await this.$recaptcha.init()
+  }
+
+  async asyncData(ctx: Context){
+    //@ts-ignore
+    //await ctx.$recaptcha.init()
   }
 }
 

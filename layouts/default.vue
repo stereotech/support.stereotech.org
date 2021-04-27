@@ -342,6 +342,11 @@ export default class Layout extends Vue {
         title: this.$tc("На главную"),
         icon: 'mdi-printer-3d',
         link: 'https://stereotech.org'
+      },
+      {
+        title: this.$tc("Связаться с нами"),
+        icon: 'mdi-face-agent',
+        link: '/contact'
       }]
   }
   private miniVariant: boolean = this.$vuetify.breakpoint.smOnly

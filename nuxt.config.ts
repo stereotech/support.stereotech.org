@@ -53,6 +53,7 @@ const config: NuxtConfig = {
         '@nuxtjs/pwa',
         '@nuxtjs/sitemap',
         '@nuxtjs/robots',
+        '@nuxtjs/recaptcha',
         '@nuxt/content',
         'nuxt-i18n'
     ],
@@ -144,7 +145,12 @@ const config: NuxtConfig = {
         color: '#ffffff',
         background: '#0277bd'
     },
-
+    recaptcha: {
+        /* reCAPTCHA options */
+        siteKey: process.env.SITE_KEY,
+        version: 3,
+        hideBadge: true
+    },
     optimizedImages: {
         optimizeImages: true,
         optimizeImagesInDev: false
