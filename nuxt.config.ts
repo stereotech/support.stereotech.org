@@ -100,12 +100,6 @@ const config: NuxtConfig = {
     sitemap: {
         hostname: 'https://support.stereotech.org'
     },
-    recaptcha: {
-        /* reCAPTCHA options */
-        siteKey: process.env.SITE_KEY,
-        version: 3,
-        hideBadge: true
-    },
     /*
     ** vuetify module configuration
     ** https://github.com/nuxt-community/vuetify-module
