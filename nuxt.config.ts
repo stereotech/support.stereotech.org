@@ -88,7 +88,8 @@ const config: NuxtConfig = {
     },
     env: {
         baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-        COCKPIT_TOKEN: process.env.COCKPIT_TOKEN || ''
+        COCKPIT_TOKEN: process.env.COCKPIT_TOKEN || '',
+        SITE_KEY: process.env.SITE_KEY || ''
     },
     manifest: {
         name: 'Stereotech - 5D Additive Manufacturing',
@@ -98,6 +99,12 @@ const config: NuxtConfig = {
     },
     sitemap: {
         hostname: 'https://support.stereotech.org'
+    },
+    recaptcha: {
+        /* reCAPTCHA options */
+        siteKey: process.env.SITE_KEY,
+        version: 3,
+        hideBadge: true
     },
     /*
     ** vuetify module configuration
