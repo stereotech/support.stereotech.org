@@ -152,6 +152,7 @@
             v-else-if="menuItem.link.startsWith('/')"
             :key="index"
             text
+            color="primary"
             nuxt
             :to="localePath(menuItem.link)"
             >{{ menuItem.title }}</v-btn
