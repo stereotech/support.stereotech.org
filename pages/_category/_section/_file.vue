@@ -148,11 +148,20 @@ export default class Section extends Vue {
   font-family: Roboto, sans-serif !important;
 }
 .nuxt-content h2 {
-  font-size: 3.75rem !important;
-  line-height: 3.75rem;
+  font-size: 1.75rem !important;
+  line-height: 1.75rem;
   letter-spacing: -0.0083333333em !important;
-  font-weight: 300;
+  font-weight: 400;
   font-family: Roboto, sans-serif !important;
+}
+.nuxt-content h3 {
+  font-size: 1.4rem !important;
+  line-height: 1.4rem;
+  letter-spacing: -0.0083333333em !important;
+  font-weight: 400;
+  font-family: Roboto, sans-serif !important;
+  margin-top: 6px;
+  margin-bottom: 8px;
 }
 .nuxt-content img {
   line-height: 1.5;
