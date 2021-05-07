@@ -1,6 +1,12 @@
 <template>
   <v-container fluid>
     <v-row justify="center">
+      <v-col cols="12" v-if="$vuetify.breakpoint.xs">
+        <v-breadcrumbs divider=">" :items="getBreadcrumbsItems"></v-breadcrumbs>
+      </v-col>
+      <v-col cols="12" v-else>
+        <v-breadcrumbs large divider=">" :items="getBreadcrumbsItems"></v-breadcrumbs>
+      </v-col>
       <v-col lg="8">
         <ContactForm />
       </v-col>
@@ -22,6 +28,18 @@ import ContactForm from '~/components/ContactForm.vue'
   }
 })
 export default class Support extends Vue {
+
+  get getBreadcrumbsItems(){
+    return [
+      {
+        text: this.$t('Поддержка'), disabled: false, exact: true, nuxt: true, to: '/'
+      },
+      {
+        text: this.$t('Сзязаться с нами'), disabled: true, exact: true, nuxt: true, to: this.$route.fullPath
+      }
+    ]
+  }
+
   async mounted () {
     //@ts-ignore
     //await this.$recaptcha.init()
