@@ -19,8 +19,7 @@
                     :items="items"
                     item-text="title"
                     item-value="path"
-                    return-object
-                    :search-input.sync="search"                   
+                    return-object                  
                     outlined
                     clearable
                     hide-no-data
@@ -60,34 +59,16 @@ export default class SupportBanner extends Vue {
   @Prop({ type: String, default: '' }) title!: string
   @Prop({type: Boolean, default: false}) searchable!: boolean
 
-  search: string = ''
   loading: boolean = false
   items: IContentDocument[] = []
-
-  @Watch('search') async onSearchChanged (value: string) {
-    if (!value || value.length < 3) {
-      this.items = []
-    }
-    value && value.length >= 3 && await this.querySelections(value)
-  }
-
-  async querySelections (search: string) {
-    this.loading = true
-
-    this.items = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: 'json' } } && { slug: { $ne: '!cover' } }).search(search).without(['body']).fetch() as IContentDocument[]
-    this.items.forEach(i => {
-      i.dir = i.dir.split('/').pop() || ''
-    })
-    this.loading = false
-  }
-
-
 
   createLink (link: string) {
     return '/' + link.split('/').slice(3).join('/')
   }
 
-
+async mounted(){
+  this.items = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: 'json' } } && { slug: { $ne: '!cover' } }).without(['body']).fetch() as IContentDocument[]
+}
 
 
 }
