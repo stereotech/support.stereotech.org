@@ -120,14 +120,14 @@ export default class ContactForm extends Vue {
   private countries: any[] = require('country-json/src/country-by-name.json')
 
   get apealThemeItems (): string[] {
-    return ['STE 520', 'STE 320', 'STE App', 'STE Slicer', this.$tc('Услуги')]
+    return ['STE 320', 'STE 520', 'STE 530', 'Stereotech 520 Hybrid', 'Stereotech 530 Hybrid', 'Stereotech 520 Fiber', 'Stereotech 530 Fiber', 'STE App', 'STE Slicer', this.$tc('Услуги')]
   }
   get problemItems (): string[] {
     if (this.apealTheme === 'Услуги') {
       this.items = []
       this.isEnable = false
     }
-    else if (this.apealTheme === 'STE 520' || this.apealTheme === 'STE 320') {
+    else if (this.apealTheme === 'STE 520' || this.apealTheme === 'STE 320' || this.apealTheme === 'STE 530' || this.apealTheme === 'Stereotech 520 Hybrid' || this.apealTheme === 'Stereotech 530 Hybrid' || this.apealTheme === 'Stereotech 520 Fiber' || this.apealTheme === 'Stereotech 530 Fiber') {
       this.items = ['Не могу запустить печать',
         'Результаты печати неудовлетворительны',
         'Нужна помощь со встроенным ПО',
