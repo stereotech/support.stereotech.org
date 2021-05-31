@@ -25,7 +25,7 @@
             v-for="(manual, index) in covers"
             :key="index"
             cols="12"
-            md="4"
+            :md="covers.length>1?'4':'12'"
           >
             <v-list>
               <v-list-item
