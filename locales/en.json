@@ -395,7 +395,13 @@
   "Параметры печати":"Printing parameters",
   "ste320":"Stereotech 3xx series",
   "ste520":"Stereotech 5xx series",
+  "hybrid520":"Stereotech 520 Hybrid",
+  "hybrid530":"Stereotech 530 Hybrid",
   "steapp":"Stereotech STE App",
   "steslicer":"Stereotech STE Slicer",
-  "Больше информации":"More resources"  
+  "Больше информации":"More resources",
+  "more-resources":"more resources",
+  "printers":"printers",
+  "software":"software",
+  "faq":"frequently asked questions"  
 }

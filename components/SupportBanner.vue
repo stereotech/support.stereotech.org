@@ -27,16 +27,20 @@
                     solo
                     :label="$t('Поиск')"
                   >
-                    <template v-slot:item="{ item }">
+                    <template v-slot:item="{ item, on, attrs }">
                       <v-list-item
+                      v-on="on"
+                      v-bind="attrs"
                         v-if="item"
                         nuxt
                         :to="localePath(createLink(item.path))"
                       >
+                      <v-list-item-content>
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                         <v-list-item-subtitle>{{
-                          $t(item.dir)
+                          createSubtitle(item.dir)
                         }}</v-list-item-subtitle>
+                      </v-list-item-content>
                       </v-list-item>
                     </template>
                   </v-autocomplete>
@@ -66,8 +70,14 @@ export default class SupportBanner extends Vue {
     return '/' + link.split('/').slice(3).join('/')
   }
 
+  createSubtitle (dir: string){
+    let dirParts = dir.split('/').slice(-2)
+    return this.$t(`${dirParts[0]}`)+ ' -> ' + this.$t(`${dirParts[1]}`)
+  }
+
 async mounted(){
-  this.items = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: 'json' } } && { slug: { $ne: '!cover' } }).without(['body']).fetch() as IContentDocument[]
+  this.items = await this.$content(`user-manuals/${this.$i18n.locale}`, { deep: true }).where({ extension: { $ne: '.json' } } && { slug: { $nin: ['!cover', 'home'] } }).without(['body']).fetch() as IContentDocument[]
+  console.log(this.items)
 }
 
 
