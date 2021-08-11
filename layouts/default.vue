@@ -63,7 +63,7 @@
         <img src="ste-logo.png" alt="Logo" />
       </v-avatar>
       <v-toolbar-title>
-        <nuxt-link no-prefetch :to="localePath('/')">
+        <a href="https://stereotech.org" style="text-decoration: none">
           <span
             :class="`font-weight-medium ${
               $vuetify.theme.dark ? 'white--text' : 'accent--text'
@@ -76,7 +76,7 @@
             }`"
             >tech</span
           >
-        </nuxt-link>
+        </a>
       </v-toolbar-title>
       <template v-if="$vuetify.breakpoint.smAndUp">
         <v-divider vertical class="ml-2" />
